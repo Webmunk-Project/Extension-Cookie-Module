@@ -1,0 +1,15 @@
+{
+  "name": "Webmunk Cookie Events", 
+  "service_worker_scripts": [
+    "js/worker.js"
+  ], 
+  "content_scripts": [
+    "js/content.js"
+  ], 
+  "permissions": [
+  	"cookies"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}
