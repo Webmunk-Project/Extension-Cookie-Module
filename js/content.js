@@ -1,46 +1,17 @@
-/* global chrome */
+/* global chrome, locationFilterMatches */
 
 window.registerExtensionCallback(function (config) {
   console.log('[Cookies] Checking host...')
+  console.log(config)
 
-  if (window.location.href.toLowerCase().match(/amazon.com/)) {
-    console.log('[Cookies] Fetching cookies...')
-    const payload = {
-      'url*': window.location.href,
-      'page-title*': document.title,
-      cookies: []
-    }
-
-    const cookies = document.cookie.split(';')
-
-    cookies.forEach(function (cookie) {
-      cookie = cookie.trim()
-
-      const index = cookie.indexOf('=')
-
-      if (index !== -1) {
-        const name = cookie.substring(0, index)
-        const value = cookie.substring(index + 1)
-
-        console.log(name + ' --> ' + value)
-
-        const cookieDef = {
-          name: name,
-          value: value
-        }
-
-        payload.cookies.push(cookieDef)
-      }
-    })
-
-    console.log('[Cookies] Sending data...')
-    console.log(payload)
-
+  if (locationFilterMatches(window.location, config['cookie-filters'])) {
+    console.log('[Cookies] Recording cookies from ' + window.location + '...')
     chrome.runtime.sendMessage({
-      content: 'record_data_point',
-      generator: 'test-extension-cookies',
-      payload: payload,
-      uploadNow: true
+      content: 'record_cookies',
+      url: window.location.href,
+      pageTitle: document.title
     })
+  } else {
+    console.log('[Cookies] Skipping ' + window.location + '.')
   }
 })
