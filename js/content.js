@@ -1,8 +1,8 @@
 /* global chrome, locationFilterMatches */
 
 window.registerExtensionCallback(function (config) {
-  console.log('[Cookies] Checking host...')
-  console.log(config)
+  // console.log('[Cookies] Checking host...')
+  // console.log(config)
 
   if (locationFilterMatches(window.location, config['cookie-filters'])) {
     console.log('[Cookies] Recording cookies from ' + window.location + '...')

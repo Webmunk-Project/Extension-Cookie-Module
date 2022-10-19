@@ -4,8 +4,6 @@ const recordCookies = function (request, sender, sendResponse) {
   console.log('[Cookie] Recording cookies for ' + request.url + '...')
 
   if (request.content === 'record_cookies') {
-    console.log('[Cookies] Fetching cookies...')
-
     const payload = {
       'url*': request.url,
       'page-title*': request.pageTitle,
@@ -22,23 +20,26 @@ const recordCookies = function (request, sender, sendResponse) {
 
         payload.cookies.push(cookie)
       })
+
+      if (payload.cookies.length > 0) {
+        const newRequest = {
+          content: 'record_data_point',
+          generator: 'browser-cookies',
+          payload: payload // eslint-disable-line object-shorthand
+        }
+
+        handleMessage(newRequest, sender, sendResponse)
+      }
     })
 
-    const newRequest = {
-      content: 'record_data_point',
-      generator: 'browser-cookies',
-      payload: payload
-    }
-
-    return handleMessage(newRequest, sender, sendResponse)
+    return true
   }
 
   return false
 }
 
 registerCustomExtension(function (config) {
-  console.log('[Cookies] Service worker initialized.')
-  console.log(config)
+  console.log('[Cookies] Initialized.')
 
   registerMessageHandler('record_cookies', recordCookies)
 })
