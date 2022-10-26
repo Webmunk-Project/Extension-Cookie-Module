@@ -1,4 +1,4 @@
-/* global chrome, handleMessage, registerCustomExtension, registerMessageHandler */
+/* global chrome, handleMessage, registerCustomModule, registerMessageHandler */
 
 const recordCookies = function (request, sender, sendResponse) {
   console.log('[Cookie] Recording cookies for ' + request.url + '...')
@@ -38,7 +38,7 @@ const recordCookies = function (request, sender, sendResponse) {
   return false
 }
 
-registerCustomExtension(function (config) {
+registerCustomModule(function (config) {
   console.log('[Cookies] Initialized.')
 
   registerMessageHandler('record_cookies', recordCookies)

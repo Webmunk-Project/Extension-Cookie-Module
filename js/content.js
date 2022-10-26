@@ -1,6 +1,6 @@
 /* global chrome, locationFilterMatches */
 
-window.registerExtensionCallback(function (config) {
+window.registerModuleCallback(function (config) {
   // console.log('[Cookies] Checking host...')
   // console.log(config)
 
