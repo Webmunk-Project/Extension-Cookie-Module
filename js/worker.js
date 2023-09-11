@@ -1,5 +1,3 @@
-/* global chrome, handleMessage, registerCustomModule, registerMessageHandler */
-
 const recordCookies = function (request, sender, sendResponse) {
   console.log('[Cookie] Recording cookies for ' + request.url + '...')
 
@@ -28,7 +26,7 @@ const recordCookies = function (request, sender, sendResponse) {
           payload: payload // eslint-disable-line object-shorthand
         }
 
-        handleMessage(newRequest, sender, sendResponse)
+        self.handleMessage(newRequest, sender, sendResponse)
       }
     })
 
@@ -38,8 +36,8 @@ const recordCookies = function (request, sender, sendResponse) {
   return false
 }
 
-registerCustomModule(function (config) {
+self.registerCustomModule(function (config) {
   console.log('[Cookies] Initialized.')
 
-  registerMessageHandler('record_cookies', recordCookies)
+  self.registerMessageHandler('record_cookies', recordCookies)
 })

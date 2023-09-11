@@ -1,4 +1,4 @@
-/* global chrome, locationFilterMatches */
+/* global locationFilterMatches */
 
 (function () {
   window.registerModuleCallback(function (config) {
